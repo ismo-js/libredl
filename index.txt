@@ -1,0 +1,24 @@
+Entity
+    name #0n [Char]
+    ref #0n Location
+
+Person < Entity
+
+
+Work
+    creator #n [Enity]
+
+Location
+    auth #1n Auth
+    payload #01 Payload
+
+Auth
+    pcol #01 [[Char]]
+    user #01 [Char]
+    passwd #01 [Char]
+    host #1 [Char]
+    port #1 UInt16
+
+Payload
+    path #01 [Char]
+    query #01 [[Char]]
