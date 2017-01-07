@@ -1,4 +1,5 @@
 import {sch} from "micro"
+import {indexOr, subtr, indizes} from "helper"
 
 const MD = Symbol("MICRO_DEST")
 const LVL = Symbol("LEVEL")
@@ -6,18 +7,6 @@ const int = parseInt
 
 class Rel {}
 
-function indexOr(stack, needle, alt = stack.length) {
-    const index = stack.indexOf(needle)
-    0 < index ? index : alt
-}
-
-function subtr(a, b) {
-    return int(a) - int(b)
-}
-
-function indizes(a) {
-    return Object.keys(a).sort(subtr)
-}
 
 function str2Rel(str) {
     const arr = str.split("\n")
@@ -36,21 +25,32 @@ function str2Rel(str) {
         const dad = l.lvls[dadNr]
         const rel = r.substr(lvlNr)
 
+        const indentin = l.lvlNr < lvlNr
+        const sinks =
+              indentin
+            ? l.sinks
+            : [...l.sinks, lvl]
+
         dad[rel] = lvl
         return {
-            ...l
-            lvlNr,
             lvls,
+            lvlNr,
+            lvl,
+            src: l.src,
+            sinks,
         }
     }
-    const root = new Rel()
+    const src = new Rel()
     const init = {
+        lvls: {-1: src},
         lvlNr: -1,
-        lvls: {-1: root},
-        root,
+        lvl: src,
+        src,
+        sinks: [],
     }
+    const {src, sinks} = arr.reduce(reducer, init)
 
-    return arr.reduce(reducer, init).root
+    return {src, sinks}
 }
 
 new Prx({
