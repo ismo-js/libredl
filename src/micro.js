@@ -2,7 +2,7 @@ import {Rel} from "rel"
 
 new Prx({
     get: p=> {
-        const rel = Rel.fromStr(p)
+        const rel = Rel.fromString(p)
     }
 })
 

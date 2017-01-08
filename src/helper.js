@@ -1,3 +1,6 @@
+const int = parseInt
+const O = Object
+
 export function indexOr(stack, needle, alt = stack.length) {
     const index = stack.indexOf(needle)
     0 < index ? index : alt

@@ -1,15 +1,22 @@
 import {indexOr, subtr, indizes} from "helper"
 
 const int = parseInt
+const O = Object
+
+class Item {
+    k
+    e
+}
 
 export class Rel {
-    static fromStr(str) {
+    static fromString(str) {
         const arr = str.split("\n")
         const reducer = (l, r)=> {
-            let lvlNr = 0
-            for (let e of r) (" " === e) ? lvlNr++ : break
+            //let lvlNr = 0
+            //for (let e of r) (" " === e) ? lvlNr++ : break
 
-            const lvl = new Rel()
+            const lvlNr = ... //TODO
+            const lvl = new Rel() //TODO convert to Item
             const lvls = {
                 ...l.lvls.filter((e, k)=> lvlNr > int(k)),
                 [lvlNr]: lvl,
@@ -18,7 +25,7 @@ export class Rel {
             const lvlNrs = indizes(a)
             const dadNr = lvlNrs[indexOr(lvlNrs, lvlNr)-1]
             const dad = l.lvls[dadNr]
-            const rel = r.substr(lvlNr)
+            const itemK = r.substr(lvlNr)
 
             const indentin = l.lvlNr < lvlNr
             const sinks =
@@ -26,7 +33,7 @@ export class Rel {
                 ? l.sinks
                 : [...l.sinks, lvl]
 
-            dad[rel] = lvl
+            dad[itemK] = lvl
             return {
                 lvls,
                 lvlNr,
@@ -45,6 +52,11 @@ export class Rel {
         }
         const {src, sinks} = arr.reduce(reducer, init)
 
-        return {src, sinks}
+        return {src, sinks} //TODO single return
+    }
+
+    toString() {
+        const [...ks] = this
+        ks.map({k, e}=> x(e.toString())) //TODO
     }
 }
