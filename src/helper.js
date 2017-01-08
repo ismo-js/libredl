@@ -11,5 +11,5 @@ export function subtr(a, b) {
 }
 
 export function indizes(a) {
-    return Object.keys(a).sort(subtr)
+    return Object.keys(a).sort(subtr).map(e=> int(e))
 }

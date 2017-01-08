@@ -4,41 +4,47 @@ const int = parseInt
 const O = Object
 
 class Item {
-    k
-    e
+    key
+    rel
+    indent
+
+    static fromString(line) {
+        let indent = 0
+        for (let e of line) (" " === e) ? indent++ : break
+
+        return new Item(indent, line.substr(indent))
+    }
+
+    constructor(indent, key, rel = new Rel()) {
+        O.assign(this, {indent, key, rel})
+    }
 }
 
 export class Rel {
     static fromString(str) {
         const arr = str.split("\n")
-        const reducer = (l, r)=> {
-            //let lvlNr = 0
-            //for (let e of r) (" " === e) ? lvlNr++ : break
-
-            const lvlNr = ... //TODO
-            const lvl = new Rel() //TODO convert to Item
-            const lvls = {
-                ...l.lvls.filter((e, k)=> lvlNr > int(k)),
-                [lvlNr]: lvl,
+        const reducer = ({src, ...l}, r)=> {
+            const item = Item.fromString(r)
+            //TODO convert rels to items
+            const rels = {
+                ...l.rels.filter((e, i)=> item.indent > int(i)),
+                [item.indent]: item.rel,
             }
 
-            const lvlNrs = indizes(a)
-            const dadNr = lvlNrs[indexOr(lvlNrs, lvlNr)-1]
-            const dad = l.lvls[dadNr]
-            const itemK = r.substr(lvlNr)
+            const relIs = indizes(l.rels)
+            const dadI = relIs[indexOr(relIs, item.indent)-1]
+            const dad = l.rels[dadI]
 
-            const indentin = l.lvlNr < lvlNr
             const sinks =
-                  indentin
+                  l.indent < item.indent
                 ? l.sinks
-                : [...l.sinks, lvl]
+                : [...l.sinks, item.rel]
 
-            dad[itemK] = lvl
+            dad[itemK] = item.rel
             return {
-                lvls,
-                lvlNr,
-                lvl,
-                src: l.src,
+                rels,
+                last: item,
+                src,
                 sinks,
             }
         }
