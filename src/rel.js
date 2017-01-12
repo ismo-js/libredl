@@ -5,14 +5,16 @@ const O = Object
 
 class Item {
     key
-    rel
     indent
 
-    static fromString(line) {
-        let indent = 0
-        for (let e of line) (" " === e) ? indent++ : break
+    static fromString(ln) {
+        let indent = Item.getIndent(ln)
 
         return new Item(indent, line.substr(indent))
+    }
+
+    static getIndent([...chs]) {
+        return chs.reduce((indent, r)=> )
     }
 
     constructor(indent, key, rel = new Rel()) {
@@ -64,5 +66,39 @@ export class Rel {
     toString() {
         const [...ks] = this
         ks.map({k, e}=> x(e.toString())) //TODO
+    }
+}
+
+export class Node extends Item {
+    dad
+    child
+
+    static fromString(str) {
+        const items = Node.tokenize(str.split("\n"))
+        items.reduce((l, r)=> cmp(
+            l.indent - r.indent,
+            new Node(),
+
+        ))
+    }
+
+    static tokenize(lns) {
+        return lns.map(Item.fromString)
+    }
+
+    constructor(dad) {
+
+    }
+}
+
+export class Graph {
+    static fromString(str) {
+        new Graph(Node.fromString(str))
+    }
+
+    constructor(node) {
+        O.assign(this, {
+
+        })
     }
 }

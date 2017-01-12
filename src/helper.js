@@ -13,3 +13,12 @@ export function subtr(a, b) {
 export function indizes(a) {
     return Object.keys(a).sort(subtr).map(e=> int(e))
 }
+
+export function cmp(i, l, m, r) {
+    return
+          (i < 0)
+        ? l(i)
+        : (i > 0)
+        ? r(i)
+        : m(i)
+}
